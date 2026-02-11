@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Dia dos Namorados 💕</title>
+  <style>
+    body {
+      background-color: #fff0f5;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      padding-top: 100px;
+      overflow: hidden;
+    }
+
+    h1 {
+      color: #e6005c;
+    }
+
+    button {
+      padding: 12px 20px;
+      font-size: 16px;
+      background-color: #ff4d88;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    #mensagem {
+      margin-top: 40px;
+      font-size: 20px;
+      color: #cc0066;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Feliz Dia dos Namorados ❤️</h1>
+<p>Clica no botão se me amas 😏</p>
+
+<button id="botao" onmouseover="fugir()" onclick="mostrarMensagem()">
+  Amo-te ❤️
+</button>
+
+<div id="mensagem">
+  Eu sabia 😌 És a melhor coisa que me aconteceu 💕
+</div>
+
+<script>
+  function fugir() {
+    const botao = document.getElementById("botao");
+    botao.style.position = "absolute";
+    botao.style.top = Math.random() * 400 + "px";
+    botao.style.left = Math.random() * 400 + "px";
+  }
+
+  function mostrarMensagem() {
+    document.getElementById("mensagem").style.display = "block";
+  }
+</script>
+
+</body>
+</html>
