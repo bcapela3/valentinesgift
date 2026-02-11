@@ -1,19 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Dia dos Namorados 💕</title>
   <style>
     body {
       background-color: #fff0f5;
       text-align: center;
       font-family: Arial, sans-serif;
-      padding-top: 100px;
+      padding-top: 90px;
       overflow: hidden;
+      margin: 0;
     }
 
-    h1 {
-      color: #e6005c;
+    h1 { color: #e6005c; margin: 0 16px; }
+    p  { color: #cc0066; font-size: 18px; margin: 16px; }
+
+    .wrap {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      align-items: center;
+      margin-top: 25px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 2;
     }
 
     button {
@@ -24,42 +36,103 @@
       border: none;
       border-radius: 12px;
       cursor: pointer;
-      position: relative;
+      user-select: none;
     }
 
-    #mensagem {
-      margin-top: 40px;
-      font-size: 20px;
-      color: #cc0066;
-      display: none;
+    #nepia {
+      position: absolute;
+      left: 50%;
+      top: 55%;
+      transform: translate(-50%, -50%);
+      background-color: #ff88b3;
     }
+
+    #surpresa {
+      margin-top: 40px;
+      opacity: 0;
+      transition: opacity 1s ease;
+      padding: 0 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    #surpresa img {
+      max-width: 320px;
+      width: 85%;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    .frase {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #cc0066;
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.5;
+    }
+
+    .hidden { display: none; }
   </style>
 </head>
 <body>
 
-<h1>Feliz Dia dos Namorados ❤️</h1>
-<p>Clica no botão se me amas 😏</p>
+  <h1>Feliz Dia dos Namorados ❤️</h1>
+  <p>Escolhe com cuidado… 😏</p>
 
-<button id="botao" onmouseover="fugir()" onclick="mostrarMensagem()">
-  Amo-te ❤️
-</button>
+  <div class="wrap">
+    <button id="amote" onclick="mostrarSurpresa()">Amo-te ❤️</button>
+    <button id="nepia" onmouseover="fugir()">Népia 🙄</button>
+  </div>
 
-<div id="mensagem">
-  Eu sabia 😌 És a melhor coisa que me aconteceu 💕
-</div>
+  <div id="surpresa" class="hidden">
+    <!-- Troca "foto.jpg" pelo nome do teu ficheiro/foto -->
+    <img src="foto.jpg" alt="Nós ❤️" />
+    <p class="frase">
+      Obrigada por me mostrares o que é amor verdadeiro: cheio de abraços e beijos, 
+      felicidade, com altos e baixos, e sobretudo com gargalhadas.
+      És a melhor pessoa do mundo ❤️
+    </p>
+  </div>
 
-<script>
-  function fugir() {
-    const botao = document.getElementById("botao");
-    botao.style.position = "absolute";
-    botao.style.top = Math.random() * 400 + "px";
-    botao.style.left = Math.random() * 400 + "px";
-  }
+  <script>
+    function fugir() {
+      const btn = document.getElementById("nepia");
 
-  function mostrarMensagem() {
-    document.getElementById("mensagem").style.display = "block";
-  }
-</script>
+      const maxX = window.innerWidth - btn.offsetWidth - 10;
+      const maxY = window.innerHeight - btn.offsetHeight - 10;
+
+      const x = Math.random() * Math.max(0, maxX);
+      const y = Math.random() * Math.max(0, maxY);
+
+      btn.style.left = x + "px";
+      btn.style.top = y + "px";
+      btn.style.transform = "none";
+    }
+
+    function mostrarSurpresa() {
+      const surpresa = document.getElementById("surpresa");
+      surpresa.classList.remove("hidden");
+
+      // Fade in suave
+      setTimeout(() => {
+        surpresa.style.opacity = "1";
+      }, 50);
+
+      // Opcional: esconder o botão "Népia" depois de clicar
+      // document.getElementById("nepia").style.display = "none";
+    }
+
+    window.addEventListener("load", () => {
+      fugir(); // mete o "Népia" numa posição inicial aleatória
+    });
+
+    window.addEventListener("resize", () => {
+      // se redimensionar a janela, evita o botão ficar fora do ecrã
+      fugir();
+    });
+  </script>
 
 </body>
 </html>
