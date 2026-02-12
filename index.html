@@ -1,217 +1,219 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dia dos Namorados 💕</title>
 
 <style>
-  :root{
-    /* Fundo verde (claro, não escuro) */
-    --bg: #e6f7ec;
+:root{
+  --bg: #e8f7ef;         /* verde claro suave */
+  --title: #0c6b3a;
+  --text: #0f7a42;
 
-    --title: #0b6b3a;
-    --text: #0f7a42;
+  --btn-love: #ff4d88;
+  --btn-nope: #ff88b3;
 
-    /* Botões */
-    --btn-love: #ff4d88;
-    --btn-nope: #ff88b3;
+  --btn-w: 170px;
+  --btn-h: 54px;
+}
 
-    /* Tamanho fixo dos botões (ambos iguais) */
-    --btn-w: 170px;
-    --btn-h: 54px;
-  }
+*{ box-sizing:border-box; }
 
-  *{ box-sizing: border-box; }
+body{
+  margin:0;
+  padding:80px 16px 40px;
+  font-family: Arial, sans-serif;
+  text-align:center;
+  background: var(--bg);
+}
 
-  body{
-    margin:0;
-    padding:80px 16px 40px;
-    font-family: Arial, sans-serif;
-    text-align:center;
-    background: var(--bg);
-    overflow-x:hidden;
-  }
+h1{
+  color: var(--title);
+  margin-bottom:10px;
+}
 
-  h1{
-    color: var(--title);
-    margin:0 0 10px;
-  }
+#pergunta{
+  color: var(--text);
+  font-size:18px;
+  margin-bottom:28px;
+}
 
-  #pergunta{
-    color: var(--text);
-    font-size:18px;
-    margin:0 0 26px;
-  }
+.row{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:24px;
+  flex-wrap:nowrap;
+}
 
-  .row{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:22px;
-    flex-wrap: nowrap;
-  }
+button{
+  border:none;
+  border-radius:16px;
+  cursor:pointer;
+  color:white;
+  width: var(--btn-w);
+  height: var(--btn-h);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  user-select:none;
+  touch-action: manipulation;
+  font-size:16px;
+}
 
-  /* Em ecrãs MUITO pequenos, mantém alinhado e evita descer */
-  @media (max-width: 360px){
-    :root{ --btn-w: 155px; }
-    .row{ gap:14px; }
-  }
+#amote{
+  background: var(--btn-love);
+}
 
-  button{
-    border:none;
-    border-radius:16px;
-    cursor:pointer;
-    color:white;
-    width: var(--btn-w);
-    height: var(--btn-h);
-    padding: 0 14px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    user-select:none;
-    touch-action: manipulation;
-  }
+.slot{
+  position:relative;
+  width: var(--btn-w);
+  height: var(--btn-h);
+  overflow:hidden;
+}
 
-  #amote{
-    background: var(--btn-love);
-    font-size:16px;
-  }
+#nepia{
+  position:absolute;
+  left:0;
+  top:0;
+  width: var(--btn-w);
+  height: var(--btn-h);
+  background: var(--btn-nope);
 
-  /* SLOT: área fixa onde o Népia se mexe SEM sair */
-  .slot{
-    position:relative;
-    width: var(--btn-w);
-    height: var(--btn-h);
-    overflow:hidden;
-  }
+  font-size: clamp(12px, 3.6vw, 16px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
-  #nepia{
-    position:absolute;
-    left:0;
-    top:0;
-    width: var(--btn-w);
-    height: var(--btn-h);
-    background: var(--btn-nope);
+  transition:
+    left 0.18s ease,
+    top 0.18s ease,
+    transform 0.25s ease;
 
-    /* texto adapta sem mudar tamanho do botão */
-    font-size: clamp(12px, 3.6vw, 16px);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  animation: flutuar 3s ease-in-out infinite;
+}
 
-    transition: left 0.18s ease, top 0.18s ease;
-  }
+/* micro movimento constante */
+@keyframes flutuar{
+  0%   { transform: translate(0px, 0px) scale(1); }
+  25%  { transform: translate(1px, -1px) scale(1); }
+  50%  { transform: translate(-1px, 1px) scale(1); }
+  75%  { transform: translate(1px, 0px) scale(1); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
 
-  #surpresa{
-    margin-top:34px;
-    opacity:0;
-    transform: translateY(10px);
-    transition: opacity .55s ease, transform .55s ease;
-    display:none;
-  }
+#surpresa{
+  margin-top:36px;
+  opacity:0;
+  transform:translateY(8px);
+  transition:0.6s ease;
+  display:none;
+}
 
-  #surpresa.show{
-    display:block;
-    opacity:1;
-    transform: translateY(0);
-  }
+#surpresa.show{
+  display:block;
+  opacity:1;
+  transform:translateY(0);
+}
 
-  .frase{
-    font-size:20px;
-    color: var(--title);
-    line-height:1.6;
-    max-width:650px;
-    margin:0 auto;
-  }
+.frase{
+  font-size:20px;
+  color: var(--title);
+  line-height:1.6;
+  max-width:650px;
+  margin:0 auto;
+}
 </style>
 </head>
 
 <body>
 
-  <h1>Feliz Dia dos Namorados ❤️</h1>
-  <p id="pergunta">Cê mi ama? Escolhe com cuidado… 😏</p>
+<h1>Feliz Dia dos Namorados ❤️</h1>
+<p id="pergunta">Cê mi ama? Escolhe com cuidado… 😏</p>
 
-  <div class="row">
-    <button id="amote" onclick="mostrarSurpresa()">Amo-te ❤️</button>
+<div class="row">
+  <button id="amote" onclick="mostrarSurpresa()">Amo-te ❤️</button>
 
-    <div class="slot" id="slot">
-      <button id="nepia" type="button">Népia 🙄</button>
-    </div>
+  <div class="slot" id="slot">
+    <button id="nepia">Népia 🙄</button>
   </div>
+</div>
 
-  <div id="surpresa">
-    <p class="frase">
-      Obrigada por me mostrares o que é amor verdadeiro:
-      cheio de abraços e beijos, cru e real, com altos e baixos,
-      felicidade, e sobretudo com gargalhadas.
-      És a melhor pessoa do mundo e eu tenho muita sorte❤️
-    </p>
-  </div>
+<div id="surpresa">
+  <p class="frase">
+    Obrigada por me mostrares o que é amor verdadeiro:
+    cheio de abraços e beijos, cru e real, com altos e baixos,
+    felicidade, e sobretudo com gargalhadas.
+    És a melhor pessoa do mundo e eu tenho muita sorte❤️
+  </p>
+</div>
 
 <script>
-  const nepia = document.getElementById("nepia");
-  const slot = document.getElementById("slot");
-  const surpresa = document.getElementById("surpresa");
+const nepia = document.getElementById("nepia");
+const slot = document.getElementById("slot");
+const surpresa = document.getElementById("surpresa");
 
-  let tentativas = 0;
-  let posX = 0;
-  let posY = 0;
+let tentativas = 0;
+let posX = 0;
+let posY = 0;
+let scale = 1;
 
-  const frases = [
-    "Népia 🙄",
-    "Tens a certeza? 😳",
-    "Olha bem… 👀",
-    "Última oportunidade 😈",
-    "Diz lá a verdade 😏",
-    "Já estás nervoso? 😌",
-    "Não vais conseguir 😂",
-    "Corajoso(a)… 😵‍💫",
-    "Amor… insiste mais 😼",
-    "Eu mando aqui 😈"
-  ];
+const frases = [
+  "Népia 🙄",
+  "Tens a certeza? 😳",
+  "Olha bem… 👀",
+  "Última oportunidade 😈",
+  "Diz lá a verdade 😏",
+  "Já estás nervoso? 😌",
+  "Não vais conseguir 😂",
+  "Corajoso(a)… 😵‍💫",
+  "Amor… insiste mais 😼",
+  "Eu mando aqui 😈"
+];
 
-  function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
+function clamp(n,min,max){
+  return Math.max(min,Math.min(max,n));
+}
 
-  function mover(){
-    tentativas++;
+function mover(){
+  tentativas++;
 
-    const idx = Math.min(frases.length - 1, tentativas - 1);
-    nepia.textContent = frases[idx];
+  const idx = Math.min(frases.length-1, tentativas-1);
+  nepia.textContent = frases[idx];
 
-    // limites do slot (garantia total)
-    const maxX = slot.clientWidth - nepia.offsetWidth;
-    const maxY = slot.clientHeight - nepia.offsetHeight;
+  // crescimento subtil (máx 6%)
+  scale = Math.min(1.06, scale + 0.01);
+  nepia.style.transform = "scale(" + scale + ")";
 
-    // mexe mais, mas sem exagero
-    const stepX = 55;
-    const stepY = 22;
+  const maxX = slot.clientWidth - nepia.offsetWidth;
+  const maxY = slot.clientHeight - nepia.offsetHeight;
 
-    const dirX = (Math.random() < 0.5) ? -1 : 1;
-    const dirY = (Math.random() < 0.5) ? -1 : 1;
+  const stepX = 35;
+  const stepY = 18;
 
-    posX = clamp(posX + dirX * stepX, 0, Math.max(0, maxX));
-    posY = clamp(posY + dirY * stepY, 0, Math.max(0, maxY));
+  const dirX = Math.random()<0.5 ? -1 : 1;
+  const dirY = Math.random()<0.5 ? -1 : 1;
 
-    nepia.style.left = posX + "px";
-    nepia.style.top  = posY + "px";
-  }
+  posX = clamp(posX + dirX*stepX,0,maxX);
+  posY = clamp(posY + dirY*stepY,0,maxY);
 
-  // PC + telemóvel: comportamento consistente
-  nepia.addEventListener("pointerenter", mover);
-  nepia.addEventListener("pointerdown", (e) => { e.preventDefault(); mover(); });
-  nepia.addEventListener("click", (e) => { e.preventDefault(); mover(); });
+  nepia.style.left = posX + "px";
+  nepia.style.top = posY + "px";
+}
 
-  function mostrarSurpresa(){
-    surpresa.classList.add("show");
-  }
+nepia.addEventListener("pointerenter", mover);
+nepia.addEventListener("pointerdown", e => { e.preventDefault(); mover(); });
+nepia.addEventListener("click", e => { e.preventDefault(); mover(); });
 
-  // posição inicial limpa
-  window.addEventListener("load", () => {
-    posX = 0; posY = 0;
-    nepia.style.left = "0px";
-    nepia.style.top  = "0px";
-  });
+function mostrarSurpresa(){
+  surpresa.classList.add("show");
+}
+
+window.addEventListener("load", () => {
+  nepia.style.left = "0px";
+  nepia.style.top  = "0px";
+});
 </script>
 
 </body>
