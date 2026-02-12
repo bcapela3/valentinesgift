@@ -18,21 +18,18 @@
     h1{ color:#d4005f; margin:0 0 12px; }
     #pergunta{ color:#c2185b; font-size:18px; margin:0 0 22px; }
 
-    /* Caixa fixa para garantir que nunca sai do ecrã */
+    /* sem fundo branco: só um “content wrap” simples */
     .arena{
       width:min(520px, 92vw);
       margin:0 auto;
-      padding:16px;
-      border-radius:18px;
-      background: rgba(255,255,255,0.65);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      padding:20px 0;
       position:relative;
     }
 
-    /* “Amo-te” e a área do “Népia” lado a lado */
+    /* botões lado a lado, mais afastados */
     .row{
       display:flex;
-      gap:12px;
+      gap:30px;
       justify-content:center;
       align-items:center;
       flex-wrap:nowrap;
@@ -51,20 +48,22 @@
       white-space:nowrap;
     }
 
+    /* Amo-te ligeiramente maior */
     #amote{
       background:#ff4d88;
+      font-size:17px;
+      padding:13px 22px;
       flex: 0 0 auto;
     }
     #amote:active{ transform: scale(0.98); }
 
-    /* SLOT: é aqui que o “Népia” vai “escorregar” e nunca sai */
+    /* SLOT: onde o Népia se mexe sem sair do ecrã */
     .slot{
       position:relative;
-      height:54px;
-      flex: 1 1 240px;
-      min-width: 190px;
-      max-width: 300px;
-      overflow:hidden; /* garantia extra */
+      height:56px;
+      width:min(320px, 46vw);
+      min-width: 200px;
+      overflow:hidden;
       border-radius:14px;
     }
 
@@ -73,14 +72,16 @@
       position:absolute;
       top:0;
       left:0;
+      transition: left 0.2s ease, top 0.2s ease, font-size 0.15s ease;
     }
 
     #surpresa{
-      margin-top:22px;
+      margin-top:26px;
       opacity:0;
       transition: opacity .6s ease, transform .6s ease;
       transform: translateY(6px);
       display:none;
+      padding: 0 6px;
     }
     #surpresa.show{
       display:block;
@@ -126,7 +127,7 @@
     const surpresa = document.getElementById("surpresa");
 
     let tentativas = 0;
-    let posX = 0;   // posição dentro do slot
+    let posX = 0;
     let posY = 0;
     let tamanho = 16;
 
@@ -148,59 +149,22 @@
     function moverAosBocadinhos() {
       tentativas++;
 
-      // cresce mas pouco (para não rebentar no mobile)
+      // cresce mas controlado (não explode no mobile)
       tamanho = Math.min(22, tamanho + 1);
       nepia.style.fontSize = tamanho + "px";
 
-      // troca texto
+      // muda texto
       const idx = Math.min(frases.length - 1, tentativas - 1);
       nepia.textContent = frases[idx];
 
-      // limites (slot fixo)
+      // limites do slot (garante que nunca sai)
       const maxX = slot.clientWidth - nepia.offsetWidth;
       const maxY = slot.clientHeight - nepia.offsetHeight;
 
-      // passos pequenos e controlados
-      const stepX = 14; // mexe só um bocadinho
-      const stepY = 6;
+      // mexe mais, mas ainda controlado
+      const stepX = 35;
+      const stepY = 18;
 
-      // alterna direções para parecer “fuga” sem caos
+      // alterna direções (parece fuga, mas sem caos)
       const dirX = (tentativas % 2 === 0) ? 1 : -1;
-      const dirY = (tentativas % 3 === 0) ? 1 : -1;
-
-      posX = clamp(posX + dirX * stepX, 0, Math.max(0, maxX));
-      posY = clamp(posY + dirY * stepY, 0, Math.max(0, maxY));
-
-      nepia.style.left = posX + "px";
-      nepia.style.top  = posY + "px";
-    }
-
-    // PC: quando tenta passar por cima, ele mexe um bocadinho
-    nepia.addEventListener("mouseenter", moverAosBocadinhos);
-
-    // Mobile: quando tenta tocar, ele mexe antes do click acontecer
-    nepia.addEventListener("touchstart", (e) => {
-      e.preventDefault();
-      moverAosBocadinhos();
-    }, { passive: false });
-
-    // Se ele conseguir clicar por acidente, também mexe e não faz nada
-    nepia.addEventListener("click", (e) => {
-      e.preventDefault();
-      moverAosBocadinhos();
-    });
-
-    function mostrarSurpresa() {
-      surpresa.classList.add("show");
-    }
-
-    // posição inicial (garante que cabe)
-    window.addEventListener("load", () => {
-      posX = 0;
-      posY = 0;
-      nepia.style.left = "0px";
-      nepia.style.top = "0px";
-    });
-  </script>
-</body>
-</html>
+      const dirY = (tentativas % 3 === 0) ?
