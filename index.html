@@ -70,9 +70,10 @@ button{
   position:relative;
   width: var(--btn-w);
   height: var(--btn-h);
-  overflow:hidden;
+  overflow:hidden; /* garante que nunca sai */
 }
 
+/* BOTÃO mantém tamanho; cresce com scale (JS) */
 #nepia{
   position:absolute;
   left:0;
@@ -81,26 +82,33 @@ button{
   height: var(--btn-h);
   background: var(--btn-nope);
 
-  font-size: clamp(12px, 3.6vw, 16px);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 
   transition:
     left 0.18s ease,
     top 0.18s ease,
-    transform 0.25s ease;
+    transform 0.2s ease;
+}
+
+/* texto adapta ao espaço sem mudar tamanho do botão */
+#nepia .inner{
+  font-size: clamp(12px, 3.6vw, 16px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: calc(var(--btn-w) - 24px);
 
   animation: flutuar 3s ease-in-out infinite;
 }
 
-/* micro movimento constante */
 @keyframes flutuar{
-  0%   { transform: translate(0px, 0px) scale(1); }
-  25%  { transform: translate(1px, -1px) scale(1); }
-  50%  { transform: translate(-1px, 1px) scale(1); }
-  75%  { transform: translate(1px, 0px) scale(1); }
-  100% { transform: translate(0px, 0px) scale(1); }
+  0%   { transform: translate(0px, 0px); }
+  25%  { transform: translate(1px, -1px); }
+  50%  { transform: translate(-1px, 1px); }
+  75%  { transform: translate(1px, 0px); }
+  100% { transform: translate(0px, 0px); }
 }
 
 #surpresa{
@@ -136,7 +144,7 @@ button{
   <button id="amote" onclick="mostrarSurpresa()">Amo-te ❤️</button>
 
   <div class="slot" id="slot">
-    <button id="nepia">Népia 🙄</button>
+    <button id="nepia" type="button"><span class="inner">Népia 🙄</span></button>
   </div>
 </div>
 
@@ -150,70 +158,82 @@ button{
 </div>
 
 <script>
-const nepia = document.getElementById("nepia");
-const slot = document.getElementById("slot");
-const surpresa = document.getElementById("surpresa");
+  const nepia = document.getElementById("nepia");
+  const inner = nepia.querySelector(".inner");
+  const slot  = document.getElementById("slot");
+  const surpresa = document.getElementById("surpresa");
 
-let tentativas = 0;
-let posX = 0;
-let posY = 0;
-let scale = 1;
+  let tentativas = 0;
+  let posX = 0;
+  let posY = 0;
+  let scale = 1;
 
-const frases = [
-  "Népia 🙄",
-  "Tens a certeza? 😳",
-  "Olha bem… 👀",
-  "Última oportunidade 😈",
-  "Diz lá a verdade 😏",
-  "Já estás nervoso? 😌",
-  "Não vais conseguir 😂",
-  "Corajoso(a)… 😵‍💫",
-  "Amor… insiste mais 😼",
-  "Eu mando aqui 😈"
-];
+  const frases = [
+    "Népia 🙄",
+    "Tens a certeza? 😳",
+    "Olha bem… 👀",
+    "Última oportunidade 😈",
+    "Diz lá a verdade 😏",
+    "Já estás nervoso? 😌",
+    "Não vais conseguir 😂",
+    "Corajoso(a)… 😵‍💫",
+    "Amor… insiste mais 😼",
+    "Eu mando aqui 😈"
+  ];
 
-function clamp(n,min,max){
-  return Math.max(min,Math.min(max,n));
-}
+  function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
 
-function mover(){
-  tentativas++;
+  function tentativaNope(){
+    tentativas++;
 
-  const idx = Math.min(frases.length-1, tentativas-1);
-  nepia.textContent = frases[idx];
+    // atualiza texto SEMPRE
+    const idx = Math.min(frases.length - 1, tentativas - 1);
+    inner.textContent = frases[idx];
 
-  // crescimento subtil (máx 6%)
-  scale = Math.min(1.06, scale + 0.01);
-  nepia.style.transform = "scale(" + scale + ")";
+    // crescimento subtil (máx 6%)
+    scale = Math.min(1.06, scale + 0.01);
+    nepia.style.transform = `scale(${scale})`;
 
-  const maxX = slot.clientWidth - nepia.offsetWidth;
-  const maxY = slot.clientHeight - nepia.offsetHeight;
+    // move controlado (nunca sai do slot)
+    const maxX = slot.clientWidth  - nepia.offsetWidth;
+    const maxY = slot.clientHeight - nepia.offsetHeight;
 
-  const stepX = 35;
-  const stepY = 18;
+    const stepX = 30;
+    const stepY = 12;
 
-  const dirX = Math.random()<0.5 ? -1 : 1;
-  const dirY = Math.random()<0.5 ? -1 : 1;
+    const dirX = (Math.random() < 0.5) ? -1 : 1;
+    const dirY = (Math.random() < 0.5) ? -1 : 1;
 
-  posX = clamp(posX + dirX*stepX,0,maxX);
-  posY = clamp(posY + dirY*stepY,0,maxY);
+    posX = clamp(posX + dirX * stepX, 0, Math.max(0, maxX));
+    posY = clamp(posY + dirY * stepY, 0, Math.max(0, maxY));
 
-  nepia.style.left = posX + "px";
-  nepia.style.top = posY + "px";
-}
+    nepia.style.left = posX + "px";
+    nepia.style.top  = posY + "px";
+  }
 
-nepia.addEventListener("pointerenter", mover);
-nepia.addEventListener("pointerdown", e => { e.preventDefault(); mover(); });
-nepia.addEventListener("click", e => { e.preventDefault(); mover(); });
+  // ✅ A CADA tentativa de clique/toque: conta sempre
+  nepia.addEventListener("pointerdown", (e) => {
+    e.preventDefault();
+    tentativaNope();
+  });
 
-function mostrarSurpresa(){
-  surpresa.classList.add("show");
-}
+  // backup: se por alguma razão fizer click (desktop), também conta
+  nepia.addEventListener("click", (e) => {
+    e.preventDefault();
+    tentativaNope();
+  });
 
-window.addEventListener("load", () => {
-  nepia.style.left = "0px";
-  nepia.style.top  = "0px";
-});
+  function mostrarSurpresa(){
+    surpresa.classList.add("show");
+  }
+
+  window.addEventListener("load", () => {
+    posX = 0;
+    posY = 0;
+    nepia.style.left = "0px";
+    nepia.style.top  = "0px";
+    inner.textContent = frases[0];
+  });
 </script>
 
 </body>
