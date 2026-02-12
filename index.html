@@ -1,165 +1,157 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Dia dos Namorados 💕</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dia dos Namorados 💕</title>
 
-  <style>
-    body {
-      margin: 0;
-      padding-top: 90px;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background: linear-gradient(135deg, #fff6f9, #ffe3ee);
-      overflow: hidden;
-    }
+<style>
+body {
+  margin: 0;
+  padding: 60px 20px;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background: linear-gradient(135deg, #fff6f9, #ffe3ee);
+  overflow-x: hidden;
+}
 
-    h1 {
-      color: #d4005f;
-      margin: 0 16px;
-    }
+h1 {
+  color: #d4005f;
+}
 
-    p {
-      color: #c2185b;
-      font-size: 18px;
-      margin: 16px;
-    }
+p {
+  color: #c2185b;
+  font-size: 18px;
+}
 
-    .wrap {
-      margin-top: 30px;
-      position: relative;
-      height: 200px;
-    }
+.area {
+  position: relative;
+  height: 250px;
+  margin-top: 30px;
+}
 
-    button {
-      padding: 12px 20px;
-      font-size: 16px;
-      border: none;
-      border-radius: 14px;
-      cursor: pointer;
-      color: white;
-      transition: 0.2s ease;
-    }
+button {
+  padding: 12px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  color: white;
+  transition: 0.2s ease;
+}
 
-    #amote {
-      background-color: #ff4d88;
-      position: relative;
-      z-index: 2;
-    }
+#amote {
+  background-color: #ff4d88;
+}
 
-    #amote:hover {
-      transform: scale(1.05);
-    }
+#nepia {
+  background-color: #ff88b3;
+  position: absolute;
+}
 
-    #nepia {
-      background-color: #ff88b3;
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-    }
+#surpresa {
+  margin-top: 40px;
+  opacity: 0;
+  transition: opacity 1s ease;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
 
-    #surpresa {
-      margin-top: 40px;
-      opacity: 0;
-      transition: opacity 1s ease;
-      padding: 0 20px;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
+.hidden {
+  display: none;
+}
 
-    .hidden {
-      display: none;
-    }
-
-    .frase {
-      font-size: 20px;
-      color: #ad1457;
-      line-height: 1.6;
-      margin-top: 20px;
-    }
-  </style>
+.frase {
+  font-size: 20px;
+  color: #ad1457;
+  line-height: 1.6;
+}
+</style>
 </head>
 
 <body>
 
-  <h1>Feliz Dia dos Namorados ❤️</h1>
-  <p>Cê mi ama? Escolhe com cuidado… 😏</p>
+<h1>Feliz Dia dos Namorados ❤️</h1>
+<p>Cê mi ama? Escolhe com cuidado… 😏</p>
 
-  <div class="wrap">
-    <button id="amote" onclick="mostrarSurpresa()">Amo-te ❤️</button>
-    <button id="nepia" onmouseover="fugir()">Népia 🙄</button>
-  </div>
+<div class="area">
+  <button id="amote" onclick="mostrarSurpresa()">Amo-te ❤️</button>
+  <button id="nepia">Népia 🙄</button>
+</div>
 
-  <div id="surpresa" class="hidden">
-    <p class="frase">
-      Obrigada por me mostrares o que é amor verdadeiro — cheio de abraços e beijos,
-      cru e real, com altos e baixos, e sobretudo com gargalhadas.
-      És a melhor pessoa do mundo ❤️
-    </p>
-  </div>
+<div id="surpresa" class="hidden">
+  <p class="frase">
+    Obrigada por me mostrares o que é amor verdadeiro:
+    cheio de abraços e beijos, cru e real, com altos e baixos,
+    felicidade, e sobretudo com gargalhadas.
+    És a melhor pessoa do mundo e eu tenho muita sorte ❤️
+  </p>
+</div>
 
-  <script>
-    let tamanho = 16;
-    let padding = 12;
-    let tentativas = 0;
+<script>
+let tamanho = 16;
+let tentativas = 0;
 
-    const frases = [
-      "Népia 🙄",
-      "Tens a certeza? 😳",
-      "Olha bem… 👀",
-      "Última oportunidade 😈",
-      "Diz lá a verdade 😏",
-      "Já estás nervoso? 😌",
-      "Não vais conseguir 😂",
-      "Corajoso(a)… 😵‍💫",
-      "Amor… insiste mais 😼",
-      "Eu mando aqui 😈"
-    ];
+const frases = [
+  "Népia 🙄",
+  "Tens a certeza? 😳",
+  "Olha bem… 👀",
+  "Última oportunidade 😈",
+  "Diz lá a verdade 😏",
+  "Já estás nervoso? 😌",
+  "Não vais conseguir 😂",
+  "Corajoso(a)… 😵‍💫",
+  "Amor… insiste mais 😼",
+  "Eu mando aqui 😈"
+];
 
-    function fugir() {
-      const btn = document.getElementById("nepia");
+const btn = document.getElementById("nepia");
 
-      tentativas++;
+// posição inicial segura
+function posicionarInicial() {
+  btn.style.left = "50%";
+  btn.style.top = "60px";
+  btn.style.transform = "translateX(-50%)";
+}
+posicionarInicial();
 
-      tamanho = Math.min(50, tamanho + 3);
-      padding = Math.min(30, padding + 2);
+function fugir() {
+  tentativas++;
 
-      btn.style.fontSize = tamanho + "px";
-      btn.style.padding = padding + "px " + (padding + 10) + "px";
+  tamanho = Math.min(48, tamanho + 2);
+  btn.style.fontSize = tamanho + "px";
 
-      const idx = Math.min(frases.length - 1, tentativas - 1);
-      btn.textContent = frases[idx];
+  const idx = Math.min(frases.length - 1, tentativas - 1);
+  btn.textContent = frases[idx];
 
-      const maxX = window.innerWidth - btn.offsetWidth - 10;
-      const maxY = window.innerHeight - btn.offsetHeight - 10;
+  const area = document.querySelector(".area");
+  const areaRect = area.getBoundingClientRect();
 
-      const x = Math.random() * Math.max(0, maxX);
-      const y = Math.random() * Math.max(0, maxY);
+  const maxX = area.offsetWidth - btn.offsetWidth;
+  const maxY = area.offsetHeight - btn.offsetHeight;
 
-      btn.style.left = x + "px";
-      btn.style.top = y + "px";
-      btn.style.transform = "none";
-    }
+  const x = Math.random() * Math.max(0, maxX);
+  const y = Math.random() * Math.max(0, maxY);
 
-    function mostrarSurpresa() {
-      const surpresa = document.getElementById("surpresa");
-      surpresa.classList.remove("hidden");
+  btn.style.left = x + "px";
+  btn.style.top = y + "px";
+  btn.style.transform = "none";
+}
 
-      setTimeout(() => {
-        surpresa.style.opacity = "1";
-      }, 50);
+// mobile support
+btn.addEventListener("mouseenter", fugir);
+btn.addEventListener("touchstart", fugir);
 
-      // opcional: esconder o "Népia"
-      // document.getElementById("nepia").style.display = "none";
-    }
+function mostrarSurpresa() {
+  const surpresa = document.getElementById("surpresa");
+  surpresa.classList.remove("hidden");
 
-    window.addEventListener("load", () => {
-      fugir();
-    });
-  </script>
+  setTimeout(() => {
+    surpresa.style.opacity = "1";
+  }, 50);
+}
+</script>
 
 </body>
 </html>
