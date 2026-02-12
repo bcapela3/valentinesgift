@@ -1,170 +1,176 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Dia dos Namorados 💕</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dia dos Namorados 💕</title>
 
-  <style>
-    body{
-      margin:0;
-      padding:70px 16px 40px;
-      font-family: Arial, sans-serif;
-      text-align:center;
-      background: linear-gradient(135deg, #fff6f9, #ffe3ee);
-      overflow-x:hidden;
-    }
+<style>
+body{
+  margin:0;
+  padding:80px 20px;
+  font-family: Arial, sans-serif;
+  text-align:center;
+  background: linear-gradient(135deg,#fff6f9,#ffe3ee);
+}
 
-    h1{ color:#d4005f; margin:0 0 12px; }
-    #pergunta{ color:#c2185b; font-size:18px; margin:0 0 22px; }
+h1{
+  color:#d4005f;
+  margin-bottom:10px;
+}
 
-    /* sem fundo branco: só um “content wrap” simples */
-    .arena{
-      width:min(520px, 92vw);
-      margin:0 auto;
-      padding:20px 0;
-      position:relative;
-    }
+#pergunta{
+  color:#c2185b;
+  font-size:18px;
+  margin-bottom:30px;
+}
 
-    /* botões lado a lado, mais afastados */
-    .row{
-      display:flex;
-      gap:30px;
-      justify-content:center;
-      align-items:center;
-      flex-wrap:nowrap;
-    }
+.row{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:40px;
+}
 
-    button{
-      border:none;
-      border-radius:14px;
-      cursor:pointer;
-      color:white;
-      font-size:16px;
-      padding:12px 18px;
-      user-select:none;
-      touch-action: manipulation;
-      transition: transform .15s ease;
-      white-space:nowrap;
-    }
+button{
+  border:none;
+  border-radius:16px;
+  cursor:pointer;
+  color:white;
+  padding:14px 22px;
+  font-size:16px;
+  transition:0.2s ease;
+}
 
-    /* Amo-te ligeiramente maior */
-    #amote{
-      background:#ff4d88;
-      font-size:17px;
-      padding:13px 22px;
-      flex: 0 0 auto;
-    }
-    #amote:active{ transform: scale(0.98); }
+#amote{
+  background:#ff4d88;
+  font-size:18px;
+  padding:16px 26px;
+}
 
-    /* SLOT: onde o Népia se mexe sem sair do ecrã */
-    .slot{
-      position:relative;
-      height:56px;
-      width:min(320px, 46vw);
-      min-width: 200px;
-      overflow:hidden;
-      border-radius:14px;
-    }
+#amote:hover{
+  transform:scale(1.05);
+}
 
-    #nepia{
-      background:#ff88b3;
-      position:absolute;
-      top:0;
-      left:0;
-      transition: left 0.2s ease, top 0.2s ease, font-size 0.15s ease;
-    }
+.slot{
+  position:relative;
+  width:220px;
+  height:70px;
+}
 
-    #surpresa{
-      margin-top:26px;
-      opacity:0;
-      transition: opacity .6s ease, transform .6s ease;
-      transform: translateY(6px);
-      display:none;
-      padding: 0 6px;
-    }
-    #surpresa.show{
-      display:block;
-      opacity:1;
-      transform: translateY(0);
-    }
+#nepia{
+  position:absolute;
+  background:#ff88b3;
+  left:0;
+  top:0;
+  transition:left 0.2s ease, top 0.2s ease;
+}
 
-    .frase{
-      margin:0;
-      color:#ad1457;
-      font-size:19px;
-      line-height:1.55;
-    }
-  </style>
+#surpresa{
+  margin-top:40px;
+  opacity:0;
+  transform:translateY(10px);
+  transition:0.6s ease;
+  display:none;
+}
+
+#surpresa.show{
+  display:block;
+  opacity:1;
+  transform:translateY(0);
+}
+
+.frase{
+  font-size:20px;
+  color:#ad1457;
+  line-height:1.6;
+  max-width:600px;
+  margin:0 auto;
+}
+</style>
 </head>
 
 <body>
-  <h1>Feliz Dia dos Namorados ❤️</h1>
-  <p id="pergunta">Cê mi ama? Escolhe com cuidado… 😏</p>
 
-  <div class="arena">
-    <div class="row">
-      <button id="amote" onclick="mostrarSurpresa()">Amo-te ❤️</button>
+<h1>Feliz Dia dos Namorados ❤️</h1>
+<p id="pergunta">Cê mi ama? Escolhe com cuidado… 😏</p>
 
-      <div class="slot" id="slot">
-        <button id="nepia" type="button">Népia 🙄</button>
-      </div>
-    </div>
+<div class="row">
+  <button id="amote" onclick="mostrarSurpresa()">Amo-te ❤️</button>
 
-    <div id="surpresa">
-      <p class="frase">
-        Obrigada por me mostrares o que é amor verdadeiro:
-        cheio de abraços e beijos, cru e real, com altos e baixos,
-        felicidade, e sobretudo com gargalhadas.
-        És a melhor pessoa do mundo e eu tenho muita sorte❤️
-      </p>
-    </div>
+  <div class="slot" id="slot">
+    <button id="nepia">Népia 🙄</button>
   </div>
+</div>
 
-  <script>
-    const nepia = document.getElementById("nepia");
-    const slot = document.getElementById("slot");
-    const surpresa = document.getElementById("surpresa");
+<div id="surpresa">
+  <p class="frase">
+    Obrigada por me mostrares o que é amor verdadeiro:
+    cheio de abraços e beijos, cru e real, com altos e baixos,
+    felicidade, e sobretudo com gargalhadas.
+    És a melhor pessoa do mundo e eu tenho muita sorte❤️
+  </p>
+</div>
 
-    let tentativas = 0;
-    let posX = 0;
-    let posY = 0;
-    let tamanho = 16;
+<script>
+const nepia = document.getElementById("nepia");
+const slot = document.getElementById("slot");
+const surpresa = document.getElementById("surpresa");
 
-    const frases = [
-      "Népia 🙄",
-      "Tens a certeza? 😳",
-      "Olha bem… 👀",
-      "Última oportunidade 😈",
-      "Diz lá a verdade 😏",
-      "Já estás nervoso? 😌",
-      "Não vais conseguir 😂",
-      "Corajoso(a)… 😵‍💫",
-      "Amor… insiste mais 😼",
-      "Eu mando aqui 😈"
-    ];
+let tentativas = 0;
+let posX = 0;
+let posY = 0;
 
-    function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
+const frases = [
+  "Népia 🙄",
+  "Tens a certeza? 😳",
+  "Olha bem… 👀",
+  "Última oportunidade 😈",
+  "Diz lá a verdade 😏",
+  "Já estás nervoso? 😌",
+  "Não vais conseguir 😂",
+  "Corajoso(a)… 😵‍💫",
+  "Amor… insiste mais 😼",
+  "Eu mando aqui 😈"
+];
 
-    function moverAosBocadinhos() {
-      tentativas++;
+function clamp(n,min,max){
+  return Math.max(min,Math.min(max,n));
+}
 
-      // cresce mas controlado (não explode no mobile)
-      tamanho = Math.min(22, tamanho + 1);
-      nepia.style.fontSize = tamanho + "px";
+function mover(){
+  tentativas++;
 
-      // muda texto
-      const idx = Math.min(frases.length - 1, tentativas - 1);
-      nepia.textContent = frases[idx];
+  // muda texto
+  const idx = Math.min(frases.length-1, tentativas-1);
+  nepia.textContent = frases[idx];
 
-      // limites do slot (garante que nunca sai)
-      const maxX = slot.clientWidth - nepia.offsetWidth;
-      const maxY = slot.clientHeight - nepia.offsetHeight;
+  const maxX = slot.clientWidth - nepia.offsetWidth;
+  const maxY = slot.clientHeight - nepia.offsetHeight;
 
-      // mexe mais, mas ainda controlado
-      const stepX = 35;
-      const stepY = 18;
+  const stepX = 40;
+  const stepY = 20;
 
-      // alterna direções (parece fuga, mas sem caos)
-      const dirX = (tentativas % 2 === 0) ? 1 : -1;
-      const dirY = (tentativas % 3 === 0) ?
+  const dirX = Math.random()<0.5 ? -1 : 1;
+  const dirY = Math.random()<0.5 ? -1 : 1;
+
+  posX = clamp(posX + dirX*stepX,0,maxX);
+  posY = clamp(posY + dirY*stepY,0,maxY);
+
+  nepia.style.left = posX + "px";
+  nepia.style.top = posY + "px";
+}
+
+nepia.addEventListener("pointerenter", mover);
+nepia.addEventListener("pointerdown", function(e){
+  e.preventDefault();
+  mover();
+});
+
+function mostrarSurpresa(){
+  surpresa.classList.add("show");
+}
+</script>
+
+</body>
+</html>
